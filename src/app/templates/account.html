@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block title %}Account{% endblock %} 
+{% block content %}
+<div style="overflow-wrap: break-word;
+            border: 1px solid;
+            padding: 17px;
+            margin-top: 100px;
+            margin-bottom: 200px;">
+
+  <h2>Local user info</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Key</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Local database UUID</th>
+        <td>{{ current_user.id }}</td>
+      </tr>
+      <tr>
+        <th>Username</th>
+        <td>{{ current_user.username }}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{ current_user.email }}</td>
+      </tr>
+      <tr>
+        <th>User directory</th>
+        <td>{{ current_user.directory }}</td>
+      </tr>
+      <tr>
+        <th>API key</th>
+        <td>{{ user_api_key }}</td>
+      </tr>
+      <tr>
+        <th>Admin privileges</th>
+        <td>{{ current_user.is_admin }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  {% if current_user.directory == 'azure' %}
+  <h2>Azure token info</h2>
+  <table class="table table-hover" style="table-layout: fixed;">
+    <thead>
+      <tr>
+        <th scope="col">Key</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key,value in azure_token_info.items() %}
+      <tr>
+        <th>{{ key }}</th>
+        <td>{{ value }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h2>Azure user info</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Key</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key,value in azure_user_info.items() %}
+      <tr>
+        <th>{{ key }}</th>
+        <td>{{ value }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

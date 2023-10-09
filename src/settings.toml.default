@@ -1,0 +1,51 @@
+[general]
+# Determines whether debug logging is enabled (true/false).
+debug               = false
+
+# Flask uses this secret key to securely sign cookies.
+secret_key          = "dev-env"
+
+# When there are no users (when starting the project for the first time) a superuser account is created.
+# The following credentials are used for creating the initial superuser account.
+superuser_username  = "superuser"
+superuser_password  = "superuser"
+
+# Leave empty to automatically generate one
+superuser_api_key   = "superuser"
+
+# The IP address on which the application will listen.
+# It's recommended to keep this as is and use a proxy server such as Nginx to handle the public requests.
+listen_address      = "127.0.0.1"
+
+# The port on which the application will listen.
+listen_port         = 5000
+
+# SQLite database URI
+# This 'sqlite://' creates an in-memory temporary sqlite database
+# Change this URI to a local file path for a persistent database.
+sqlite_database_uri = 'sqlite://'
+
+
+[azure]
+# Azure Active Directory (AD) app credentials.
+# More info: https://learn.microsoft.com/en-us/power-apps/developer/data-platform/walkthrough-register-app-azure-active-directory
+secret_key          = ""
+client_id           = ""
+client_secret       = ""
+tenant_id           = ""
+
+# After a user is authenticated by Microsoft, they are redirected to a specific URI.
+# This setting defines that redirection path, which is part of the authentication route.
+# 
+# Ensure that this redirect URI is also configured in the Azure AD app.
+# More info: https://learn.microsoft.com/en-us/azure/active-directory/develop/reply-url
+#
+# Note: All auth routes start with "/auth",
+# So if your redirect path is "/getAToken" the Azure AD app redirect URI needs to be "https://mydomain.com/auth/getAtoken"
+# Or if you're testing this locally "http://localhost:5000/auth/getAToken"
+redirect_path       = "/getAToken"
+
+# You can define a list of scopes for extended functionality.
+# An empty list means only the login functionality will be performed.
+# For a list of proper permission names, refer to this document: https://docs.microsoft.com/en-us/graph/permissions-reference
+scopes              = []
