@@ -11,9 +11,9 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from werkzeug.security import check_password_hash, generate_password_hash
 
 # Local imports
-from app import cryptoutil, db, log, settings
+from app import db, log, settings
 from app.auth import auth
-from app.auth.utils import get_source_addr, ui_login_required
+from app.libs.utils import get_source_addr, ui_login_required
 from app.models import User
 
 
@@ -194,8 +194,7 @@ def logout():
 @auth.route("/account")
 @ui_login_required
 def account():
-    encrypted_api_key = current_user.encrypted_api_key
-    user_api_key = cryptoutil.decrypt(encrypted_api_key)
+    user_api_key = current_user.get_api_key()
     if current_user.directory == "azure":
         token = _get_token_from_cache(settings["azure"]["scopes"])
         if not token:

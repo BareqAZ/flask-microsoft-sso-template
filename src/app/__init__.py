@@ -73,7 +73,7 @@ def create_app():
     from app.user import user
 
     app.register_blueprint(user, url_prefix="/")
-    app.register_blueprint(api, url_prefix="/api")
+    app.register_blueprint(api, url_prefix="/api/v1")
     app.register_blueprint(auth, url_prefix="/auth")
 
     with app.app_context():
@@ -84,20 +84,18 @@ def create_app():
             log.info("No users found, creating the initial superuser")
             superuser_username = settings["general"]["superuser_username"]
             superuser_password = settings["general"]["superuser_password"]
-            superuser_api_key = cryptoutil.encrypt(
-                settings["general"]["superuser_api_key"]
-            )
+            superuser_api_key = settings["general"]["superuser_api_key"]
 
             admin_user = User(
                 username=superuser_username,
                 pw_hash=generate_password_hash(superuser_password),
                 email="superuser@localhost",
                 is_admin=True,
-                encrypted_api_key=superuser_api_key
-                if settings["general"]["superuser_api_key"]
-                else None,
                 directory="local",
             )
+
+            if superuser_api_key:
+                admin_user.set_api_key(superuser_api_key)
 
             try:
                 db.session.add(admin_user)
@@ -109,7 +107,7 @@ def create_app():
         # We try to decrypt the superuser API key on startup
         # So if any decryption issue found we throw an error.
         superuser = User.query.first()
-        cryptoutil.decrypt(superuser.encrypted_api_key)
+        superuser.get_api_key()
 
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"

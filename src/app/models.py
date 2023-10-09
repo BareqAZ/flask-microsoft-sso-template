@@ -1,7 +1,7 @@
-# Flask imports
 # Python imports
 import uuid
 
+# Flask imports
 from flask_login import UserMixin
 
 # Local imports
@@ -45,3 +45,15 @@ class User(Base, UserMixin):
         if not self.encrypted_api_key:
             api_key = str(uuid.uuid4())
             self.encrypted_api_key = cryptoutil.encrypt(api_key)
+
+    def gen_api_key(self) -> str:
+        api_key = str(uuid.uuid4())
+        self.encrypted_api_key = cryptoutil.encrypt(api_key)
+        return api_key
+
+    def set_api_key(self, api_key) -> None:
+        self.encrypted_api_key = cryptoutil.encrypt(api_key)
+        return api_key
+
+    def get_api_key(self) -> str:
+        return cryptoutil.decrypt(self.encrypted_api_key)

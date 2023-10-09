@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 
+# Find the absolute path regardless of where this script is being executed from.
+SRC=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 set -e
 
-linter_path="$*"
+linter_path="$@"
 
-if [  $# -eq 0 ];
-then
-  linter_path="src";
-fi
+[[ -z $linter_path ]] && linter_path="$SRC/src"
 
 # --- flake8 ---
-flake8 $linter_path --config ./linter_config.cfg --exit-zero
+flake8 $linter_path --config $SRC/linter_config.cfg --exit-zero
 
 # --- black ---
 black $linter_path
 
 # --- isort ---
-isort $linter_path --settings-path ./linter_config.cfg
+isort $linter_path --settings-path $SRC/linter_config.cfg
 
 # --- radon ---
 radon mi -s -n B $linter_path
-
-exit

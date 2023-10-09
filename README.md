@@ -1,3 +1,4 @@
+
 # Flask Microsoft SSO Template
 
 This is a basic Flask template to help kick-start the development of your next Flask project without having to write the entire authentication code yourself. <br>
@@ -24,10 +25,11 @@ Create a new Azure AD app by referring to [this guide](https://learn.microsoft.c
 Configure the Azure app credentials in the Flask app by copying the default settings `./src/settings.toml.default` file to `./src/settings.toml` and configuring the new settings file with the Azure app credentials.
 
 3. **Setup Python Virtual Environment:**
-   ```bash
+   ```
    python -m venv .venv
    source .venv/bin/activate
    pip3 install -r requirements.txt
+   pip3 install -r requirements_dev.txt
    ```
 
 4. **Run the Debug server:**
@@ -57,17 +59,19 @@ Configure the Azure app credentials in the Flask app by copying the default sett
 ```
 src
 ├── app
-│   ├── api         # Contains all the API routes
-│   │   
-│   ├── auth        # Contains authentication routes, SSO modules, and helper functions
-│   │   
-│   ├── static      # Static files such as images, icons, and JavaScript
+│   ├── __init__.py   # Flask configuration
 │   │
-│   ├── templates   # Flask templates
+│   ├── api           # Contains all the API routes
 │   │
-│   └── user        # User-accessible routes
+│   ├── auth          # Contains authentication routes, SSO modules, and helper functions
+│   │
+│   ├── static        # Static files such as images, icons, and JavaScript
+│   │
+│   ├── templates     # Flask templates
+│   │
+│   └── user          # User-accessible routes
 │
-├── settings.toml   # Contains all configurable settings and credentials
+├── settings.toml     # Contains all configurable settings and credentials
 │
-└── bin             # Contains executables for starting both the debug and production servers
+└── bin               # Contains executables for starting both the debug and production servers
 ```

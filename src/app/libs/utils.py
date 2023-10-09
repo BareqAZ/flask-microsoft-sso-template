@@ -1,8 +1,9 @@
-# Flask imports
 # Python imports
+import re
 from functools import wraps
 from typing import Callable, Optional, Tuple
 
+# Flask imports
 from flask import abort, jsonify, redirect, request, url_for
 from flask_login import UserMixin, current_user
 
@@ -20,6 +21,23 @@ transitioning to a production environment.
 You can find examples illustrating how to use these functions in
 the API routes "api/routes.py".
 """
+
+
+def validate_email(email: str) -> bool:
+    """
+    This is as good as it gets.
+    More information: https://emailregex.com/index.html
+    """
+    email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+    return bool(email_pattern.match(email))
+
+
+def get_api_user() -> Optional[User]:
+    """
+    A wrapper around _get_api_user() for cleaner usability.
+    This will either return a user or None.
+    """
+    return _get_api_user()[0]
 
 
 def api_key_required(f: Callable) -> Callable:

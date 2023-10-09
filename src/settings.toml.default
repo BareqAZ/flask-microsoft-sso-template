@@ -10,7 +10,7 @@ secret_key          = "dev-env"
 superuser_username  = "superuser"
 superuser_password  = "superuser"
 
-# Leave empty to automatically generate one
+# Leave empty to automatically generate one.
 superuser_api_key   = "superuser"
 
 # The IP address on which the application will listen.
@@ -27,9 +27,10 @@ sqlite_database_uri = 'sqlite://'
 
 
 [azure]
+# Controls whether Microsoft SSO sign is is enabled or not.
+enabled             = true
 # Azure Active Directory (AD) app credentials.
 # More info: https://learn.microsoft.com/en-us/power-apps/developer/data-platform/walkthrough-register-app-azure-active-directory
-secret_key          = ""
 client_id           = ""
 client_secret       = ""
 tenant_id           = ""
@@ -48,4 +49,4 @@ redirect_path       = "/getAToken"
 # You can define a list of scopes for extended functionality.
 # An empty list means only the login functionality will be performed.
 # For a list of proper permission names, refer to this document: https://docs.microsoft.com/en-us/graph/permissions-reference
-scopes              = []
+scopes              = ["email"]

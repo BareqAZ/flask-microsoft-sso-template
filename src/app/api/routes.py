@@ -1,6 +1,6 @@
 # local imports
 from app.api import api
-from app.auth.utils import (
+from app.libs.utils import (
     admin_required,
     api_key_required,
     get_current_user,
